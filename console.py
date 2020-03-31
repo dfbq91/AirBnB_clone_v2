@@ -43,6 +43,24 @@ class HBNBCommand(cmd.Cmd):
                 raise SyntaxError()
             my_list = line.split(" ")
             obj = eval("{}()".format(my_list[0]))
+            if len(my_list) > 0:
+                for index in range(1, len(my_list)):
+                    attr = my_list[index].split("=")
+                    if hasattr(obj, attr[0]):
+                        try:
+                            if "." in attr[1]:
+                                attr[1] = float(attr[1])
+                            else:
+                                attr[1] = int(attr[1])
+                        except ValueError:
+                            if type(attr[1]) == str:
+                                for char in attr[1]:
+                                    if char == '_':
+                                        attr[1] = attr[1].replace(char, ' ')
+                                    if char == '"':
+                                        attr[1] = attr[1].replace(char, '')
+                        finally:
+                            setattr(obj, attr[0], attr[1])
             obj.save()
             print("{}".format(obj.id))
         except SyntaxError:
