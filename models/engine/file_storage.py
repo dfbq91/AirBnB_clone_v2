@@ -29,7 +29,7 @@ class FileStorage:
             return self.__objects
         new = {}
         for key, value in self.__objects.items():
-            if value.__class__ = cls:
+            if value.__class__ == cls:
                 new[key] = value
         return new
 
@@ -63,8 +63,8 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
-        """"Delete obj from __objects if it’s inside
-        """"
+        """Delete obj from __objects if it’s inside
+        """
         if obj is not None:
             key = "{}.{}".format(obj.__class__.__name__, obj.id)
             del self.__objects[key]
