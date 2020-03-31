@@ -3,12 +3,20 @@
 import uuid
 import models
 from datetime import datetime
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+
+
+Base = declarative_base()
 
 
 class BaseModel:
     """This class will defines all common attributes/methods
     for other classes
     """
+    id = Column(String(60), primary_key=True, nullable=False)
+    created_at = 
+    
 
     def __init__(self, *args, **kwargs):
         """Instantiation of base model class
@@ -26,7 +34,7 @@ class BaseModel:
                     value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
                 if key != "__class__":
                     setattr(self, key, value)
-        else:
+        else:            
             self.id = str(uuid.uuid4())
             self.created_at = self.updated_at = datetime.now()
             models.storage.new(self)
