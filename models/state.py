@@ -11,3 +11,9 @@ class State(BaseModel, Base):
     
     __tablename__ = 'states'
     name = Column(String(128), nullable=False)
+    
+    @property
+    def cities(self):
+      '''returns the list of City instances with
+      state_id equals to the current State.id'''
+      
