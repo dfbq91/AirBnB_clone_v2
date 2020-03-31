@@ -70,3 +70,8 @@ class BaseModel:
         if my_dict["_sa_instance_state"]:
           del my_dict["_sa_instance_state"]
         return my_dict
+
+    def delete(self):
+        '''to delete the current instance from the storage
+        (models.storage) by calling the method delete'''
+        models.storage.delete(self)
