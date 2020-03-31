@@ -1,6 +1,7 @@
 # HBNB
 
 This is the console /command interpreter for the Holberton Airbnb clone project. The console can be used to store objects in and retrieve objects from a JSON.
+Airbnb is an online marketplace that connects people who want to rent out their homes with people who are looking for accommodations in that locale. ... For hosts, participating in Airbnb is a way to earn some income from their property, but with the risk that the guest might do damage to it.
 
 ### Supported classes:
 * BaseModel
