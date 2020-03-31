@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 """This is the state class"""
 import models
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 from models.city import City
+from sqlalchemy import Column, Integer, String
 
 
 class State(BaseModel, Base):
@@ -22,5 +23,5 @@ class State(BaseModel, Base):
         cities_in_state = []
         for city in all_cities.values():
             if city.state_id == self.id:
-                cityes_in_state.append(city)
-        return cities_in_
+                cities_in_state.append(city)
+        return cities_in_state

@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """This is the city class"""
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
+from sqlalchemy import Column, Integer, String
+from sqlalchemy import ForeignKey
 
 
 class City(BaseModel, Base):
