@@ -46,8 +46,9 @@ class DBStorage:
           result = self.__session.query(cls)
       elif cls is None:
           result = self.__session.query()
-      for obj in result:
-          print("{}.{}".format())
+      for key, value in result:
+          all_objs = 
+          
           
           
           
@@ -55,5 +56,13 @@ class DBStorage:
           result = self.__session.query(cls)
       elif cls is None:
           result = self.__session.query()
-      for obj in result:
-          print(obj)
+      for key, value in result:
+          new = "{}.{}".format())
+          
+      if cls is None:
+            return self.__objects
+        new = {}
+        for key, value in self.__objects.items():
+            if value.__class__ == cls:
+                new[key] = value
+        return new
