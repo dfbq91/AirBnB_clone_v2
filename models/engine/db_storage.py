@@ -33,7 +33,12 @@ class DBStorage:
                            .format(user, password, host, database), pool_pre_ping=True)
       Base.metadata.create_all(self.__engine)
       Session = sessionmaker(bind=engine)
-      session = Session()
+      self.__session = Session()
       
       if hbn_env == 'test':
           Base.metadata.drop_all(self.__engine)
+          
+    def all(self, cls=None):
+      '''query on the current database session all objects
+      depending of the class name (argument cls)'''
+      result = self.__session.query(cls).order_by(State.id)
