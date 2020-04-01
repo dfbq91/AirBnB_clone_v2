@@ -34,7 +34,7 @@ class DBStorage:
 
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
                              .format(user, password, host, database), pool_pre_ping=True)
-        Base.metadata.create_all(self.__engine)
+        #Base.metadata.create_all(self.__engine)
 
         if hbn_env == 'test':
             Base.metadata.drop_all(self.__engine)
@@ -46,7 +46,7 @@ class DBStorage:
         '''query on the current database session all objects
         depending of the class name (argument cls)'''
         all_objs = {}
-        all_classes = [User, State, City, Amenity, Place]
+        all_classes = ["User", "State", "City", "Amenity", "Place", "Review"]
         if cls is None:
             for myclass in all_classes:
                 objects = self.__session.query(myclass).all()
@@ -65,7 +65,6 @@ class DBStorage:
         if obj:
             self.__session.add(obj)
     
-
     def save(self):
         '''commit all changes of the current database session (self.__session)'''
         try:
@@ -82,5 +81,5 @@ class DBStorage:
         '''create all tables in the database'''
         Base.metadata.create_all(self.__engine)
         Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        session = scoped_session(Session())
-        self.__session = session
+        session = scoped_session(Session)
+        self.__session = session()
