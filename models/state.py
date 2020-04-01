@@ -14,7 +14,7 @@ class State(BaseModel, Base):
         name: input name
     """
 
-    if os.getenv('HBNB_TYPE_STORAGE') == 'file'
+    if os.getenv('HBNB_TYPE_STORAGE') == 'file':
         @property
         def cities(self):
             '''returns the list of City instances with
@@ -28,5 +28,5 @@ class State(BaseModel, Base):
     elif os.getenv('HBNB_TYPE_STORAGE') == 'db':
         __tablename__ = 'states'
         name = Column(String(128), nullable=False)
-        cities = relationship("City", cascade="all, delete", back_ref="state")
+        cities = relationship("City", cascade="all, delete", backref="state")
     
