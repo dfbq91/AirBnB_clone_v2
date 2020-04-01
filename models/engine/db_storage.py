@@ -31,16 +31,16 @@ class DBStorage:
             host = environ['HBNB_MYSQL_HOST']
             database = environ['HBNB_MYSQL_DB']
             hbn_env = environ['HBNB_ENV']
-        except KeyError(key):
-            pass         
+        except KeyError:
+            pass    
         
          
-      self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                           .format(user, password, host, database), pool_pre_ping=True)
-      Base.metadata.create_all(self.__engine)
-            
-      if hbn_env == 'test':
-          Base.metadata.drop_all(self.__engine)
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
+                             .format(user, password, host, database), pool_pre_ping=True)
+        Base.metadata.create_all(self.__engine)
+
+        if hbn_env == 'test':
+            Base.metadata.drop_all(self.__engine)
           
     def all(self, cls=None):
         '''query on the current database session all objects
