@@ -67,6 +67,8 @@ class DBStorage:
         '''commit all changes of the current database session (self.__session)'''
         try:
             self.__session.commit()
+        except InvalidRequestError:
+            pass            
     
     def delete(self, obj=None):
         '''delete from the current database session obj if not None'''
