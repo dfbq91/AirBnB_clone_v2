@@ -33,6 +33,7 @@ class DBStorage:
                            .format(user, password, host, database), pool_pre_ping=True)
       Base.metadata.create_all(self.__engine)
       Session = sessionmaker(bind=engine)
+      session = Session()
       
       if hbn_env == 'test':
           Base.metadata.drop_all(self.__engine)
