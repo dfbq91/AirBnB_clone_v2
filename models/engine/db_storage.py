@@ -47,7 +47,7 @@ class DBStorage:
       elif cls is None:
           result = self.__session.query()
       for key, value in result:
-          all_objs = 
+          all_objs = "{}."
           
           
           
