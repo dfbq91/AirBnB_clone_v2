@@ -42,27 +42,19 @@ class DBStorage:
       '''query on the current database session all objects
       depending of the class name (argument cls)'''
       all_objs = {}
+      all_classes = [User, State, City, Amenity, Place]
       if cls is not None:
-          result = self.__session.query(cls)
+          for myclass in all_classes:
+              objects = self.__session.query(myclass).all()
+          for obj in objects:
+              key = ""{}.{}".fo"
       elif cls is None:
-          result = self.__session.query()
+          result = self.__session.query().all()
       for key, value in result:
           all_objs = "{}."
           
-          
-          
-          
-      if cls is not None:
-          result = self.__session.query(cls)
-      elif cls is None:
-          result = self.__session.query()
-      for key, value in result:
-          new = "{}.{}".format())
-          
-      if cls is None:
-            return self.__objects
-        new = {}
-        for key, value in self.__objects.items():
-            if value.__class__ == cls:
-                new[key] = value
-        return new
+          #
+    #key = <class-name>.<object-id>
+    #value = object
+
+      
