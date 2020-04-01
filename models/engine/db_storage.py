@@ -8,6 +8,7 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
+from sqlalchemy import create_engine
 import sqlalchemy as db
 from os import environ
 
@@ -19,7 +20,13 @@ class DBStorage:
     def __init__(self):
       """create the engine ant link to the MySQL database and
       user created before"""
+      
+      engine = create_engine('mysql+mysqldb://hbnb_dev:hbnb_dev_pwd@localhost/hbnb_dev_db')
       user = environ['HBNB_MYSQL_USER']
-      password = ['HBNB_MYSQL_PWD']
-      host = ['HBNB_MYSQL_HOST']
-      database = ['HBNB_MYSQL_DB']
+      password = environ['HBNB_MYSQL_PWD']
+      host = environ['HBNB_MYSQL_HOST']
+      database = environ['HBNB_MYSQL_DB']
+      
+      
+      
+      
