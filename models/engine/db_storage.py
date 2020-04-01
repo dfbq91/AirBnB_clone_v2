@@ -21,12 +21,15 @@ class DBStorage:
       """create the engine ant link to the MySQL database and
       user created before"""
       
-      engine = create_engine('mysql+mysqldb://hbnb_dev:hbnb_dev_pwd@localhost/hbnb_dev_db')
+      
       user = environ['HBNB_MYSQL_USER']
       password = environ['HBNB_MYSQL_PWD']
       host = environ['HBNB_MYSQL_HOST']
       database = environ['HBNB_MYSQL_DB']
+      hbn_env = environ['HBNB_ENV']
+         
+      self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
+                           .format(user, password, host, database), pool_pre_ping=True)
       
-      
-      
-      
+      if hbn_env == 'test':
+          
