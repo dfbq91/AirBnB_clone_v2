@@ -8,10 +8,12 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-import sqlalchemy as db
 from os import environ
+from sqlalchemy import create_engine
+from sqlalchemy.orm import scoped_session
+from sqlalchemy.orm import sessionmaker
+
+import sqlalchemy as db
 
 
 class DBStorage:
@@ -33,9 +35,7 @@ class DBStorage:
       self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
                            .format(user, password, host, database), pool_pre_ping=True)
       Base.metadata.create_all(self.__engine)
-      Session = sessionmaker(bind=engine)
-      self.__session = Session()
-      
+            
       if hbn_env == 'test':
           Base.metadata.drop_all(self.__engine)
           
@@ -78,7 +78,8 @@ class DBStorage:
     def reload(self): 
         '''create all tables in the database'''
         Base.metadata.create_all(self.__engine)
-        
+        Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        self.__session = scoped_session(Session())
         
             
       
