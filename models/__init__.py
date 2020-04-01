@@ -9,7 +9,7 @@ from models.place import Place
 from models.review import Review
 from os import environ
 
-if environ[HBNB_TYPE_STORAGE] == 'db':
+if environ['HBNB_TYPE_STORAGE'] == 'db':
     from models.engine.db_storage import DBStorage
     storage = DBStorage()
 else:

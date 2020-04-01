@@ -22,15 +22,18 @@ class DBStorage:
     __session = None
     
     def __init__(self):
-      """create the engine ant link to the MySQL database and
-      user created before"""
+        """create the engine ant link to the MySQL database and
+        user created before"""
       
-      
-      user = environ['HBNB_MYSQL_USER']
-      password = environ['HBNB_MYSQL_PWD']
-      host = environ['HBNB_MYSQL_HOST']
-      database = environ['HBNB_MYSQL_DB']
-      hbn_env = environ['HBNB_ENV']
+        try:
+            user = environ['HBNB_MYSQL_USER']
+            password = environ['HBNB_MYSQL_PWD']
+            host = environ['HBNB_MYSQL_HOST']
+            database = environ['HBNB_MYSQL_DB']
+            hbn_env = environ['HBNB_ENV']
+        except KeyError(key):
+            pass         
+        
          
       self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
                            .format(user, password, host, database), pool_pre_ping=True)
@@ -40,25 +43,25 @@ class DBStorage:
           Base.metadata.drop_all(self.__engine)
           
     def all(self, cls=None):
-      '''query on the current database session all objects
-      depending of the class name (argument cls)'''
-      all_objs = {}
-      all_classes = [User, State, City, Amenity, Place]
-      if cls is None:
-          for myclass in all_classes:
-              objects = self.__session.query(myclass).all()
-          for obj in objects:
-              key = "{}.{}".format(obj.__class.__name__, obj.id)
-              all_objs[key] = obj
-      else:
-          objects = self.__session.query(eval(cls)).all()
-          for obj in objects:
-              key = "{}.{}".format(obj.__class.__name__, obj.id)
-              all_objs[key] = obj
-      return all_objs
+        '''query on the current database session all objects
+        depending of the class name (argument cls)'''
+        all_objs = {}
+        all_classes = [User, State, City, Amenity, Place]
+        if cls is None:
+            for myclass in all_classes:
+                objects = self.__session.query(myclass).all()
+            for obj in objects:
+                key = "{}.{}".format(obj.__class.__name__, obj.id)
+                all_objs[key] = obj
+        else:
+            objects = self.__session.query(eval(cls)).all()
+            for obj in objects:
+                key = "{}.{}".format(obj.__class.__name__, obj.id)
+                all_objs[key] = obj
+        return all_objs
 
     def new(self, obj):
-    '''add the object to the current database session (self.__session)'''
+        '''add the object to the current database session (self.__session)'''
         if obj:
             self.__session.add(eval(obj))
     
