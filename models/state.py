@@ -13,11 +13,7 @@ class State(BaseModel, Base):
     Attributes:
         name: input name
     """
-    
-    __tablename__ = 'states'
-    name = Column(String(128), nullable=False)
-    cities = relationship("City", cascade="all, delete", back_ref="state")
-    
+
     if os.getenv('HBNB_TYPE_STORAGE') == 'file'
         @property
         def cities(self):
@@ -30,6 +26,7 @@ class State(BaseModel, Base):
                     cities_in_state.append(city)
             return cities_in_state
     elif os.getenv('HBNB_TYPE_STORAGE') == 'db':
-        def cities(self):
-          '''represent a relationship with the class City'''
+        __tablename__ = 'states'
+        name = Column(String(128), nullable=False)
+        cities = relationship("City", cascade="all, delete", back_ref="state")
     
