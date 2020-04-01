@@ -31,7 +31,8 @@ class DBStorage:
          
       self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
                            .format(user, password, host, database), pool_pre_ping=True)
-      Session = sessionmaker(bind = engine)
+      Base.metadata.create_all(self.__engine)
+      Session = sessionmaker(bind=engine)
       
       if hbn_env == 'test':
-          
+          Base.metadata.drop_all(self.__engine)
