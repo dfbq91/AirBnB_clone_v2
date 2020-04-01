@@ -50,13 +50,23 @@ class DBStorage:
               key = "{}.{}".format(obj.__class.__name__, obj.id)
               all_objs[key] = obj
       else:
-          objects = self.__session.query(cls).all()
+          objects = self.__session.query(eval(cls)).all()
           for obj in objects:
               key = "{}.{}".format(obj.__class.__name__, obj.id)
               all_objs[key] = obj
-          
-          #
-    #key = <class-name>.<object-id>
-    #value = object
+      return all_objs
 
+    def new(self, obj):
+    '''add the object to the current database session (self.__session)'''
+        if obj:
+            self.__session.add(obj)
+    
+
+    def save(self):
+        '''commit all changes of the current database session (self.__session)'''
+        self.__session.commit()
+    
+    def delete(self, obj=None):
+      '''delete from the current database session obj if not None'''
+      db.session.delete(me)
       
