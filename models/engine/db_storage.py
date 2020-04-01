@@ -9,6 +9,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from os import environ
+from os import getenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
@@ -24,23 +25,22 @@ class DBStorage:
     def __init__(self):
         """create the engine ant link to the MySQL database and
         user created before"""
-      
-        try:
-            user = environ['HBNB_MYSQL_USER']
-            password = environ['HBNB_MYSQL_PWD']
-            host = environ['HBNB_MYSQL_HOST']
-            database = environ['HBNB_MYSQL_DB']
-            hbn_env = environ['HBNB_ENV']
-        except KeyError:
-            pass    
-        
-         
+
+        user = getenv('HBNB_MYSQL_USER')
+        password = getenv('HBNB_MYSQL_PWD')
+        host = getenv('HBNB_MYSQL_HOST')
+        database = getenv('HBNB_MYSQL_DB')
+        hbn_env = getenv('HBNB_ENV')
+
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
                              .format(user, password, host, database), pool_pre_ping=True)
         Base.metadata.create_all(self.__engine)
 
         if hbn_env == 'test':
             Base.metadata.drop_all(self.__engine)
+
+        #Session = sessionmaker(bind=self.__engine)
+        #self.__session = Session()
           
     def all(self, cls=None):
         '''query on the current database session all objects
@@ -63,7 +63,7 @@ class DBStorage:
     def new(self, obj):
         '''add the object to the current database session (self.__session)'''
         if obj:
-            self.__session.add(eval(obj))
+            self.__session.add(obj)
     
 
     def save(self):
@@ -82,7 +82,5 @@ class DBStorage:
         '''create all tables in the database'''
         Base.metadata.create_all(self.__engine)
         Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        self.__session = scoped_session(Session())
-        
-            
-      
+        session = scoped_session(Session())
+        self.__session = session
