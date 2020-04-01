@@ -13,6 +13,7 @@ from sqlalchemy.orm import sessionmaker
 import sqlalchemy as db
 from os import environ
 
+
 class DBStorage:
     """This class manage the data base"""
     __engine = None
@@ -59,14 +60,22 @@ class DBStorage:
     def new(self, obj):
     '''add the object to the current database session (self.__session)'''
         if obj:
-            self.__session.add(obj)
+            self.__session.add(eval(obj))
     
 
     def save(self):
         '''commit all changes of the current database session (self.__session)'''
-        self.__session.commit()
+        try:
+            self.__session.commit()
     
     def delete(self, obj=None):
-      '''delete from the current database session obj if not None'''
-      db.session.delete(me)
+        '''delete from the current database session obj if not None'''
+        if obj is not None:
+            self.__session.delete(eval(obj))
+            
+    def reload(self): 
+        '''create all tables in the database'''
+        Base.metadata.create_all(engine)
+        
+            
       
