@@ -9,6 +9,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 import sqlalchemy as db
 from os import environ
 
@@ -30,6 +31,7 @@ class DBStorage:
          
       self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
                            .format(user, password, host, database), pool_pre_ping=True)
+      Session = sessionmaker(bind = engine)
       
       if hbn_env == 'test':
           
