@@ -43,15 +43,17 @@ class DBStorage:
       depending of the class name (argument cls)'''
       all_objs = {}
       all_classes = [User, State, City, Amenity, Place]
-      if cls is not None:
+      if cls is None:
           for myclass in all_classes:
               objects = self.__session.query(myclass).all()
           for obj in objects:
-              key = ""{}.{}".fo"
-      elif cls is None:
-          result = self.__session.query().all()
-      for key, value in result:
-          all_objs = "{}."
+              key = "{}.{}".format(obj.__class.__name__, obj.id)
+              all_objs[key] = obj
+      else:
+          objects = self.__session.query(cls).all()
+          for obj in objects:
+              key = "{}.{}".format(obj.__class.__name__, obj.id)
+              all_objs[key] = obj
           
           #
     #key = <class-name>.<object-id>
