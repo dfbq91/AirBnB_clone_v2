@@ -78,16 +78,53 @@ class TestConsole(unittest.TestCase):
             self.consol.onecmd("create")
             self.assertEqual(
                 "** class name missing **\n", f.getvalue())
+
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("create asdfsfsd")
             self.assertEqual(
                 "** class doesn't exist **\n", f.getvalue())
+
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("create User")
+
         with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("all User")
             self.assertEqual(
                 "[[User]", f.getvalue()[:7])
+
+    def test_create_class_whitout_attr(self):
+        """Test create command input(classes)
+        but without attributes"""
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.consol.onecmd("create BaseModel")
+            bm_obj = f.getvalue().strip()
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.consol.onecmd("create User")
+            usr_obj = f.getvalue().strip()
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.consol.onecmd("create Review")
+            rev_obj = f.getvalue().strip()
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.consol.onecmd("create City")
+            cit_obj = f.getvalue().strip()
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.consol.onecmd("create State")
+            ste_obj = f.getvalue().strip()
+
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.consol.onecmd("create Place")
+            plc_obj = f.getvalue().strip()
+
+    def test_create_class_with_attr(self):
+        """Test create command input(classes)
+        with attributes"""
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.consol.onecmd('create State name="California"')
+            pl = f.getvalue().strip()
 
     def test_show(self):
         """Test show command inpout"""
