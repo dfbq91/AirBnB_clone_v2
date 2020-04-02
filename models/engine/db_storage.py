@@ -21,7 +21,7 @@ class DBStorage:
     """This class manage the data base"""
     __engine = None
     __session = None
-    
+
     def __init__(self):
         """create the engine ant link to the MySQL database and
         user created before"""
@@ -32,16 +32,12 @@ class DBStorage:
         database = getenv('HBNB_MYSQL_DB')
         hbn_env = getenv('HBNB_ENV')
 
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                             .format(user, password, host, database), pool_pre_ping=True)
-        #Base.metadata.create_all(self.__engine)
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
+            user, password, host, database), pool_pre_ping=True)
 
         if hbn_env == 'test':
             Base.metadata.drop_all(self.__engine)
 
-        #Session = sessionmaker(bind=self.__engine)
-        #self.__session = Session()
-          
     def all(self, cls=None):
         '''query on the current database session all objects
         depending of the class name (argument cls)'''
@@ -64,20 +60,21 @@ class DBStorage:
         '''add the object to the current database session (self.__session)'''
         if obj:
             self.__session.add(obj)
-    
+
     def save(self):
-        '''commit all changes of the current database session (self.__session)'''
+        '''commit all changes of the current database
+        session (self.__session)'''
         try:
             self.__session.commit()
         except InvalidRequestError:
-            pass            
-    
+            pass
+
     def delete(self, obj=None):
         '''delete from the current database session obj if not None'''
         if obj is not None:
             self.__session.delete(eval(obj))
 
-    def reload(self): 
+    def reload(self):
         '''create all tables in the database'''
         Base.metadata.create_all(self.__engine)
         Session = sessionmaker(bind=self.__engine, expire_on_commit=False)

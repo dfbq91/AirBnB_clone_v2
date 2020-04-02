@@ -16,7 +16,7 @@ class BaseModel:
     """
     id = Column(String(60), primary_key=True, nullable=False)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
-    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())    
+    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs):
         """Instantiation of base model class
@@ -34,7 +34,7 @@ class BaseModel:
                     value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
                 if key != "__class__":
                     setattr(self, key, value)
-        else:            
+        else:
             self.id = str(uuid.uuid4())
             self.created_at = self.updated_at = datetime.now()
 
@@ -43,12 +43,10 @@ class BaseModel:
         Return:
             returns a string of class name, id, and dictionary
         """
-        if self.__dict__["_sa_instance_state"]:
-          del self.__dict__["_sa_instance_state"]
-        #dictcopy = self.__dict__.copy()
-        #dictcopy.pop("_sa_instance_state"), None)
+        mod_dict = self.__dict__.copy()
+        mod_dict.pop("_sa_instance_state", None)
         return "[{}] ({}) {}".format(
-            type(self).__name__, self.id, self.__dict__)
+            type(self).__name__, self.id, mod_dict)
 
     def __repr__(self):
         """return a string representaion
@@ -72,7 +70,7 @@ class BaseModel:
         my_dict["created_at"] = self.created_at.isoformat()
         my_dict["updated_at"] = self.updated_at.isoformat()
         if my_dict["_sa_instance_state"]:
-          del my_dict["_sa_instance_state"]
+            del my_dict["_sa_instance_state"]
         return my_dict
 
     def delete(self):
