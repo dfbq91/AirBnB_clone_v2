@@ -49,14 +49,14 @@ class DBStorage:
         all_classes = ["User", "State", "City", "Amenity", "Place", "Review"]
         if cls is None:
             for myclass in all_classes:
-                objects = self.__session.query(myclass).all()
+                objects = self.__session.query(eval(myclass))
             for obj in objects:
-                key = "{}.{}".format(obj.__class.__name__, obj.id)
+                key = "{}.{}".format(type(obj).__name__, obj.id).all()
                 all_objs[key] = obj
         else:
             objects = self.__session.query(eval(cls)).all()
             for obj in objects:
-                key = "{}.{}".format(obj.__class.__name__, obj.id)
+                key = "{}.{}".format(type(obj).__name__, obj.id)
                 all_objs[key] = obj
         return all_objs
 

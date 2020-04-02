@@ -43,6 +43,10 @@ class BaseModel:
         Return:
             returns a string of class name, id, and dictionary
         """
+        if self.__dict__["_sa_instance_state"]:
+          del self.__dict__["_sa_instance_state"]
+        #dictcopy = self.__dict__.copy()
+        #dictcopy.pop("_sa_instance_state"), None)
         return "[{}] ({}) {}".format(
             type(self).__name__, self.id, self.__dict__)
 
