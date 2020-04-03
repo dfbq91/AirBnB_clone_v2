@@ -27,9 +27,10 @@ class FileStorage:
         """
         if cls is None:
             return self.__objects
+
         new = {}
         for key, value in self.__objects.items():
-            if value.__class__ == cls:
+            if cls.__name__ == type(value).__name__:
                 new[key] = value
         return new
 
@@ -66,5 +67,6 @@ class FileStorage:
         """Delete obj from __objects if it’s inside
         """
         if obj is not None:
-            key = "{}.{}".format(obj.__class__.__name__, obj.id)
-            del self.__objects[key]
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            if key in self.__objects:
+                del self.__objects[key]
