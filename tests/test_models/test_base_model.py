@@ -13,12 +13,6 @@ import pep8
 class TestBaseModel(unittest.TestCase):
     """this will test the base model class"""
 
-    #def setUp(self):
-        #'''Object created from a class'''
-        #self.my_object = BaseModel()
-        #self.db = MySQLdb.connect(host='localhost', user=hbnb_test,
-                         #passwd=hbnb_test, db=hbnb_test_db)
-
     @classmethod
     def setUpClass(cls):
         """setup for the test"""
@@ -124,6 +118,7 @@ class TestBaseModel(unittest.TestCase):
 
     def test_delete(self):
         '''check if a instance of the storage is deleted'''
-        
+
+
 if __name__ == "__main__":
     unittest.main()
