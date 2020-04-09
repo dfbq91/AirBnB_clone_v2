@@ -2,6 +2,7 @@
 from datetime import datetime
 from fabric.api import *
 
+
 def do_pack():
     '''generates a .tgz archive from the contents
     of the web_static'''
@@ -9,12 +10,12 @@ def do_pack():
     filename = "web_static_{}{}{}{}{}{}".format(now.year, now.month,
                                                 now.day, now.hour,
                                                 now.minute, now.second)
-    local("mkdir -p versions") # create versions folder
+    local("mkdir -p versions")  # create versions folder
 
     # Compress web_static in .tgz file in moves to versions folder
-    command_executed = local(("tar -cvzf versions/{}.tgz web_static").format(filename))
+    com = local(("tar -cvzf versions/{}.tgz web_static").format(filename))
 
-    if command_executed.failed is True:
+    if com.failed is True:
         return None
     else:
         return ("versions/{}".format(filename))
