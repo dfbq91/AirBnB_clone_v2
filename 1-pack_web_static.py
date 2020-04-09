@@ -18,4 +18,4 @@ def do_pack():
     if com.failed is True:
         return None
     else:
-        return ("versions/{}".format(filename))
+        return ("versions/{}.tgz".format(filename))

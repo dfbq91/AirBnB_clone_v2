@@ -1,11 +1,29 @@
 #!/usr/bin/python3
 from datetime import datetime
-from fabric.api import put, run, env
+from fabric.api import local, put, run, env
 import os.path
-
 
 env.hosts = ['34.74.97.226', '18.209.18.155']
 env.user = "ubuntu"
+
+
+def do_pack():
+    '''generates a .tgz archive from the contents
+    of the web_static'''
+
+    now = datetime.now()
+    filename = "web_static_{}{}{}{}{}{}".format(now.year, now.month,
+                                                now.day, now.hour,
+                                                now.minute, now.second)
+    local("mkdir -p versions")  # create versions folder
+
+    # Compress web_static in .tgz file in moves to versions folder
+    com = local(("tar -cvzf versions/{}.tgz web_static").format(filename))
+
+    if com.failed is True:
+        return None
+    else:
+        return ("versions/{}.tgz".format(filename))
 
 
 def do_deploy(archive_path):
@@ -52,3 +70,14 @@ def do_deploy(archive_path):
 
     except:
         return False
+
+
+def deploy():
+    '''creates and distributes an archive to web servers'''
+
+    file_path = do_pack()
+
+    if file_path is None:
+        return False
+
+    return do_deploy(file_path)
