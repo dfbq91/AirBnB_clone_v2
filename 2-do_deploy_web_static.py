@@ -30,7 +30,7 @@ def do_deploy(archive_path):
             format(file_non_ver, file_non_ext))
 
         # Delete the archive from the web server
-        run("rm /tmp/{}".format(file_non_versions))
+        run("rm /tmp/{}".format(file_non_ver))
 
         # Move web static files one directory level up
         run("mv {}{}/web_static/* {}{}/".
@@ -50,4 +50,5 @@ def do_deploy(archive_path):
         return True
 
     except:
+        print("hubo error")
         return False
