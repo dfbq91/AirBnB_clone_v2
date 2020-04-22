@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 @app.teardown_appcontext
-def remove_SQLAlchemy_session():
+def remove_SQLAlchemy_session(self):
     '''remove SQLAlchemy session'''
     storage.close()
 
