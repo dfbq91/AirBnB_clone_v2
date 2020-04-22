@@ -50,7 +50,7 @@ class DBStorage:
                 key = "{}.{}".format(type(obj).__name__, obj.id).all()
                 all_objs[key] = obj
         else:
-            objects = self.__session.query(eval(cls)).all()
+            objects = self.__session.query(cls).all()
             for obj in objects:
                 key = "{}.{}".format(type(obj).__name__, obj.id)
                 all_objs[key] = obj
@@ -80,3 +80,8 @@ class DBStorage:
         Session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         session = scoped_session(Session)
         self.__session = session()
+
+    def close(self):
+        '''call remove() method on the private session attribute
+        to remove thw current SQLAlchemy session'''
+        self.__session.close()

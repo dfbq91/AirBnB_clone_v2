@@ -25,10 +25,10 @@ class State(BaseModel, Base):
             state_id equals to the current State.id'''
             all_cities = models.storage.all(City)
             cities_in_state = []
-            for city in all_cities.values():
+            for key, value in all_cities.items():
                 try:
-                    if city.state_id == self.id:
-                        cities_in_state.append(city)
+                    if value.state_id == self.id:
+                        cities_in_state.append(value)
                 except BaseException:
                     pass
             return cities_in_state
