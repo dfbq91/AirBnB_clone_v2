@@ -1,8 +1,12 @@
 # HBNB
 
+![HBNB Logo](hbnb-logo)
+
+## What is this project about
 This is the console /command interpreter for the Holberton Airbnb clone project. The console can be used to store objects in and retrieve objects from a JSON.
 Airbnb is an online marketplace that connects people who want to rent out their homes with people who are looking for accommodations in that locale. ... For hosts, participating in Airbnb is a way to earn some income from their property, but with the risk that the guest might do damage to it.
 
+## Going deeper into the project
 ### Supported classes:
 * BaseModel
 * User
@@ -53,3 +57,8 @@ Ex:
 Additionally, the console supports `<class name>.<command>(<parameters>)` syntax.
 Ex:
 `City.show(my_city_id)`
+
+## Authors
+We are students of Holberton School, passionate for computer science.
+* Diego Betancourt | [GitHub](https://github.com/dfbq91) | [LinkedIn](https://www.linkedin.com/in/diegofernandobetancourtquintero/)
+* Jose Luis Saldarriaga | [GitHub](https://github.com/asoka904) | [LinkedIn](https://www.linkedin.com/in/jose-saldarriaga/)
